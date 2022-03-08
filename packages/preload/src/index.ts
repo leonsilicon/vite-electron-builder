@@ -2,5 +2,5 @@
  * @module preload
  */
 
-import './nodeCrypto';
-import './versions';
+import './node-crypto.js';
+import './versions.js';

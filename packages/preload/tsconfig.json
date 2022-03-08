@@ -1,24 +1,20 @@
 {
-  "compilerOptions": {
-    "module": "esnext",
-    "target": "esnext",
-    "sourceMap": false,
-    "moduleResolution": "Node",
-    "skipLibCheck": true,
-    "strict": true,
-    "isolatedModules": true,
-
-    "types" : ["node"],
-
-    "baseUrl": ".",
-  },
-  "include": [
-    "src/**/*.ts",
-    "contracts.d.ts",
-    "../../types/**/*.d.ts"
-  ],
-  "exclude": [
-    "**/*.spec.ts",
-    "**/*.test.ts"
-  ]
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+		"module": "esnext",
+		"target": "esnext",
+		"types": [
+			"node"
+		],
+		"baseUrl": "."
+	},
+	"include": [
+		"src/**/*.ts",
+		"typings/contracts.d.ts",
+		"../../types/**/*.d.ts"
+	],
+	"exclude": [
+		"**/*.spec.ts",
+		"**/*.test.ts"
+	]
 }

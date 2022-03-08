@@ -1,54 +1,63 @@
 {
-  "name": "vite-electron-builder",
-  "private": true,
-  "engines": {
-    "node": ">=v16.13",
-    "npm": ">=8.1"
-  },
-  "main": "packages/main/dist/index.cjs",
-  "scripts": {
-    "prepare": "lion-git-hooks",
-    "build": "npm run build:main && npm run build:preload && npm run build:renderer",
-    "build:main": "cd ./packages/main && vite build",
-    "build:preload": "cd ./packages/preload && vite build",
-    "build:renderer": "cd ./packages/renderer && vite build",
-    "compile": "cross-env MODE=production npm run build && electron-builder build --config .electron-builder.config.js --dir --config.asar=false",
-    "test": "npm run test:main && npm run test:preload && npm run test:renderer && npm run test:e2e",
-    "test:e2e": "npm run build && vitest run",
-    "test:main": "vitest run -r packages/main --passWithNoTests",
-    "test:preload": "vitest run -r packages/preload --passWithNoTests",
-    "test:renderer": "vitest run -r packages/renderer --passWithNoTests",
-    "watch": "node scripts/watch.js",
-    "lint": "eslint . --ext js,ts,vue",
-    "tc:main": "tsc --noEmit -p packages/main/tsconfig.json",
-    "tc:preload": "tsc --noEmit -p packages/preload/tsconfig.json",
-    "tc:renderer": "vue-tsc --noEmit -p packages/renderer/tsconfig.json",
-    "tc": "pnpm run tc:main && npm run tc:preload && npm run tc:renderer"
-  },
-  "devDependencies": {
-    "@leonzalion/configs": "^1.1.9",
-    "@types/node": "^17.0.21",
-    "@vitejs/plugin-vue": "2.2.4",
-    "@vue/test-utils": "2.0.0-rc.17",
-    "cross-env": "7.0.3",
-    "electron": "17.1.1",
-    "electron-builder": "22.14.13",
-    "electron-devtools-installer": "3.2.0",
-    "eslint": "8.10.0",
-    "eslint-plugin-vue": "8.5.0",
-    "happy-dom": "2.46.0",
-    "lion-git-hooks": "^1.0.7",
-    "lion-system": "^1.0.11",
-    "nano-staged": "0.6.0",
-    "playwright": "1.19.2",
-    "prettier": "^2.5.1",
-    "typescript": "4.6.2",
-    "vite": "2.8.6",
-    "vitest": "0.6.0",
-    "vue-tsc": "0.32.1"
-  },
-  "dependencies": {
-    "electron-updater": "4.6.5",
-    "vue": "3.2.31"
-  }
+	"name": "vite-electron-builder",
+	"private": true,
+	"engines": {
+		"node": ">=v16.13",
+		"npm": ">=8.1"
+	},
+	"type": "module",
+	"main": "packages/main/dist/index.cjs",
+	"scripts": {
+		"prepare": "lion-git-hooks",
+		"build": "npm run build:main && npm run build:preload && npm run build:renderer",
+		"build:main": "cd ./packages/main && vite build",
+		"build:preload": "cd ./packages/preload && vite build",
+		"build:renderer": "cd ./packages/renderer && vite build",
+		"compile": "cross-env MODE=production npm run build && electron-builder build --config .electron-builder.config.js --dir --config.asar=false",
+		"test": "npm run test:main && npm run test:preload && npm run test:renderer && npm run test:e2e",
+		"test:e2e": "npm run build && vitest run",
+		"test:main": "vitest run -r packages/main --passWithNoTests",
+		"test:preload": "vitest run -r packages/preload --passWithNoTests",
+		"test:renderer": "vitest run -r packages/renderer --passWithNoTests",
+		"watch": "node scripts/watch.js",
+		"lint": "eslint . --ext js,ts,vue",
+		"prettier": "prettier --write '**/*.{js,ts,cjs,mjs,json}'",
+		"tc:main": "tsc --noEmit -p packages/main/tsconfig.json",
+		"tc:preload": "tsc --noEmit -p packages/preload/tsconfig.json",
+		"tc:renderer": "vue-tsc --noEmit -p packages/renderer/tsconfig.json",
+		"tc": "pnpm run tc:main && npm run tc:preload && npm run tc:renderer"
+	},
+	"devDependencies": {
+		"@leonzalion/configs": "^1.1.9",
+		"@types/node": "^17.0.21",
+		"@vitejs/plugin-vue": "2.2.4",
+		"@vue/test-utils": "2.0.0-rc.17",
+		"cross-env": "7.0.3",
+		"electron": "17.1.1",
+		"electron-builder": "22.14.13",
+		"electron-devtools-installer": "3.2.0",
+		"eslint": "8.10.0",
+		"eslint-plugin-vue": "8.5.0",
+		"happy-dom": "2.46.0",
+		"lion-git-hooks": "^1.0.7",
+		"lion-system": "^1.0.11",
+		"nano-staged": "0.6.0",
+		"playwright": "1.19.2",
+		"prettier": "^2.5.1",
+		"typescript": "4.6.2",
+		"vite": "2.8.6",
+		"vitest": "0.6.0",
+		"vue-tsc": "0.32.1"
+	},
+	"dependencies": {
+		"desm": "^1.2.0",
+		"electron-updater": "4.6.5",
+		"vue": "3.2.31"
+	},
+	"prettier": "@leonzalion/configs/prettier.cjs",
+	"commitlint": {
+		"extends": [
+			"@leonzalion/configs/commitlint.cjs"
+		]
+	}
 }

@@ -6,6 +6,7 @@ specifiers:
   '@vitejs/plugin-vue': 2.2.4
   '@vue/test-utils': 2.0.0-rc.17
   cross-env: 7.0.3
+  desm: ^1.2.0
   electron: 17.1.1
   electron-builder: 22.14.13
   electron-devtools-installer: 3.2.0
@@ -25,6 +26,7 @@ specifiers:
   vue-tsc: 0.32.1
 
 dependencies:
+  desm: 1.2.0
   electron-updater: 4.6.5
   vue: 3.2.31
 
@@ -1748,6 +1750,10 @@ packages:
     resolution: {integrity: sha1-3zrhmayt+31ECqrgsp4icrJOxhk=}
     engines: {node: '>=0.4.0'}
     dev: true
+
+  /desm/1.2.0:
+    resolution: {integrity: sha512-/sHgwtz8V4kzHc/cii4OTtpEssvYe/yDDlPnZyMP5wO5KXYGfUoh22n+8OMhepStjhq6o577SRgTrdfcRepDbw==}
+    dev: false
 
   /detect-node/2.1.0:
     resolution: {integrity: sha512-T0NIuQpnTvFDATNuHN5roPwSBG83rFsuO+MXXH9/3N1eFbn4wcPjttvjMLEPWJ0RGUYgQE7cGgS3tNxbqCGM7g==}
