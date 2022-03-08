@@ -1,0 +1,12 @@
+{
+	"include": [
+		"packages",
+		"scripts",
+		"test",
+		"typings",
+		".electron-builder.config.js",
+		".eslintrc.cjs",
+		".nano-staged.mjs",
+		"vitest.config.ts",
+	]
+}
