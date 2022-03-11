@@ -3,6 +3,6 @@
 	"include": [
 		"src",
 		"test",
-		"vite.config.js"
+		"vite.config.ts"
 	]
 }

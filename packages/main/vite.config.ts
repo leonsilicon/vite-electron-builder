@@ -1,20 +1,26 @@
-import { node } from '../../.electron-vendors.cache.json';
-import { join } from 'path';
-import { builtinModules } from 'module';
+import * as fs from 'node:fs';
+import * as process from 'node:process';
+import { join } from 'node:path';
+import { builtinModules } from 'node:module';
+import { dirname } from 'desm';
+import type { UserConfig } from 'vite';
 
-const PACKAGE_ROOT = __dirname;
+const { node } = JSON.parse(
+	fs.readFileSync('../../electron-vendors.cache.json', 'utf-8')
+) as { node: string };
+
+const PACKAGE_ROOT = dirname(import.meta.url);
 
 /**
- * @type {import('vite').UserConfig}
  * @see https://vitejs.dev/config/
  */
-const config = {
+const config: UserConfig = {
 	mode: process.env.MODE,
 	root: PACKAGE_ROOT,
 	envDir: process.cwd(),
 	resolve: {
 		alias: {
-			'/@/': join(PACKAGE_ROOT, 'src') + '/',
+			'~': join(PACKAGE_ROOT, 'src') + '/',
 		},
 	},
 	build: {

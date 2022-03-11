@@ -1,5 +1,5 @@
 import { app, shell } from 'electron';
-import { URL } from 'url';
+import { URL } from 'node:url';
 
 /**
  * List of origins that you allow open INSIDE the application and permissions for each of them.
@@ -75,8 +75,9 @@ app.on('web-contents-created', (_, contents) => {
 		(webContents, permission, callback) => {
 			const { origin } = new URL(webContents.getURL());
 
-			const permissionGranted =
-				!!ALLOWED_ORIGINS_AND_PERMISSIONS.get(origin)?.has(permission);
+			const permissionGranted = Boolean(
+				ALLOWED_ORIGINS_AND_PERMISSIONS.get(origin)?.has(permission)
+			);
 			callback(permissionGranted);
 
 			if (!permissionGranted && import.meta.env.DEV) {
@@ -120,7 +121,7 @@ app.on('web-contents-created', (_, contents) => {
 	 * @see https://www.electronjs.org/docs/latest/tutorial/security#12-verify-webview-options-before-creation
 	 */
 	contents.on('will-attach-webview', (event, webPreferences, params) => {
-		const { origin } = new URL(params.src);
+		const { origin } = new URL(params.src!);
 		if (!ALLOWED_ORIGINS_AND_PERMISSIONS.has(origin)) {
 			if (import.meta.env.DEV) {
 				console.warn(

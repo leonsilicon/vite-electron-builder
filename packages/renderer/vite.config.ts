@@ -1,22 +1,28 @@
-/* eslint-env node */
-
-import { chrome } from '../../.electron-vendors.cache.json';
-import { join } from 'path';
-import { builtinModules } from 'module';
+import * as fs from 'node:fs';
+import * as process from 'node:process';
+import { builtinModules } from 'node:module';
+import * as path from 'node:path';
 import vue from '@vitejs/plugin-vue';
+import { dirname } from 'desm';
+import type { UserConfig } from 'vite';
 
-const PACKAGE_ROOT = __dirname;
+const { chrome } = JSON.parse(
+	fs.readFileSync('../../.electron-vendors.cache.json', 'utf-8')
+) as {
+	chrome: string;
+};
+
+const PACKAGE_ROOT = dirname(import.meta.url);
 
 /**
- * @type {import('vite').UserConfig}
  * @see https://vitejs.dev/config/
  */
-const config = {
+const config: UserConfig = {
 	mode: process.env.MODE,
 	root: PACKAGE_ROOT,
 	resolve: {
 		alias: {
-			'/@/': join(PACKAGE_ROOT, 'src') + '/',
+			'~': path.join(PACKAGE_ROOT, 'src') + '/',
 		},
 	},
 	plugins: [vue()],
@@ -32,7 +38,7 @@ const config = {
 		outDir: 'dist',
 		assetsDir: '.',
 		rollupOptions: {
-			input: join(PACKAGE_ROOT, 'index.html'),
+			input: path.join(PACKAGE_ROOT, 'index.html'),
 			external: [...builtinModules.flatMap((p) => [p, `node:${p}`])],
 		},
 		emptyOutDir: true,

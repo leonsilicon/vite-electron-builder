@@ -1,13 +1,21 @@
-import { chrome } from '../../.electron-vendors.cache.json';
-import { builtinModules } from 'module';
+import * as fs from 'node:fs';
+import * as process from 'node:process';
+import { builtinModules } from 'node:module';
+import { dirname } from 'desm';
+import type { UserConfig } from 'vite';
 
-const PACKAGE_ROOT = __dirname;
+const { chrome } = JSON.parse(
+	fs.readFileSync('../../.electron-vendors.cache.json', 'utf-8')
+) as {
+	chrome: string;
+};
+
+const PACKAGE_ROOT = dirname(import.meta.url);
 
 /**
- * @type {import('vite').UserConfig}
  * @see https://vitejs.dev/config/
  */
-const config = {
+const config: UserConfig = {
 	mode: process.env.MODE,
 	root: PACKAGE_ROOT,
 	envDir: process.cwd(),
