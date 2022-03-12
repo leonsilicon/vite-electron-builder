@@ -1,5 +1,5 @@
 const path = require('path');
-const defineConfig = orequire('eslint-define-config');
+const { defineConfig } = require('eslint-define-config');
 
 module.exports = defineConfig({
 	extends: '../../.eslintrc.cjs',

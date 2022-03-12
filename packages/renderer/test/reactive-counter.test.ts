@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { expect, test } from 'vitest';
-import ReactiveCounter from '../src/components/ReactiveCounter.vue';
+import ReactiveCounter from '../src/components/reactive-counter.vue';
 
 test('ReactiveHash component', async () => {
 	expect(ReactiveCounter).toBeTruthy();

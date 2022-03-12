@@ -7,5 +7,5 @@ const count = ref(0);
 <template>
 	<button @click="count++">count is: {{ count }}</button>
 	<br /><br />
-	<code>packages/renderer/src/components/ReactiveCounter.vue</code>
+	<code>packages/renderer/src/components/reactive-counter.vue</code>
 </template>

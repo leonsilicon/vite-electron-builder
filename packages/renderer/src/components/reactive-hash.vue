@@ -21,5 +21,5 @@ const hashedString = computed(() =>
 		<input v-model="hashedString" type="text" readonly />
 	</label>
 	<br /><br />
-	<code>packages/renderer/src/components/ReactiveHash.vue</code>
+	<code>packages/renderer/src/components/reactive-hash.vue</code>
 </template>

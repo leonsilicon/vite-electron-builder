@@ -25,7 +25,7 @@ const config: UserConfig = {
 	root: PACKAGE_ROOT,
 	resolve: {
 		alias: {
-			'~r': join(import.meta.url, './src'),
+			'~r': join(import.meta.url, 'src'),
 			'~m': join(import.meta.url, '../main/src'),
 			'~p': join(import.meta.url, '../preload/src'),
 		},

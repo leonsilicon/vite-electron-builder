@@ -32,7 +32,7 @@ import ElectronVersions from '~r/components/electron-versions.vue';
 
 	<p>
 		Edit
-		<code>packages/renderer/src/App.vue</code> to test hot module replacement.
+		<code>packages/renderer/src/app.vue</code> to test hot module replacement.
 	</p>
 </template>
 
