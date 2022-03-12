@@ -1,6 +1,5 @@
-import * as electron from 'electron';
+import { contextBridge } from 'electron';
 
-const { contextBridge } = electron;
 /**
  * Typesafe wrapper for `electron.contextBridge.exposeInMainWorld`.
  * Guarantees that all exposed APIs will comply with contracts.

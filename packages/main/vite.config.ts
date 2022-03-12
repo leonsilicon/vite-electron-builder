@@ -3,8 +3,6 @@ import * as process from 'node:process';
 import { builtinModules } from 'node:module';
 import { join, dirname } from 'desm';
 import type { UserConfig } from 'vite';
-import type { Plugin } from 'rollup';
-import ts from 'typescript';
 
 const { node } = JSON.parse(
 	fs.readFileSync(
@@ -14,26 +12,6 @@ const { node } = JSON.parse(
 ) as { node: string };
 
 const PACKAGE_ROOT = dirname(import.meta.url);
-
-function copyElectronCjs(): Plugin {
-	return {
-		name: 'copy-electron-cjs',
-		buildStart() {
-			const source = fs.readFileSync(
-				join(import.meta.url, 'src/electron.cts'),
-				'utf-8'
-			);
-
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-			const result = ts.transpileModule(source, {});
-
-			fs.writeFileSync(
-				join(import.meta.url, './dist/electron.cjs'),
-				result.outputText
-			);
-		},
-	};
-}
 
 /**
  * @see https://vitejs.dev/config/
@@ -56,12 +34,11 @@ const config: UserConfig = {
 		assetsDir: '.',
 		minify: process.env.MODE !== 'development',
 		lib: {
-			entry: 'src/index.cts',
-			formats: ['es'],
+			entry: 'src/index.ts',
+			formats: ['cjs'],
 		},
 		rollupOptions: {
 			external: [
-				/electron\.cjs/,
 				'electron',
 				'electron-devtools-installer',
 				...builtinModules.flatMap((p) => [p, `node:${p}`]),
@@ -73,7 +50,6 @@ const config: UserConfig = {
 		emptyOutDir: true,
 		brotliSize: false,
 	},
-	plugins: [copyElectronCjs()],
 };
 
 export default config;

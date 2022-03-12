@@ -1,11 +1,11 @@
 {
 	"name": "vite-electron-builder",
 	"private": true,
+	"type": "module",
 	"engines": {
 		"node": ">=v16.13",
 		"npm": ">=8.1"
 	},
-	"type": "module",
 	"main": "packages/main/dist/index.cjs",
 	"scripts": {
 		"prepare": "lion-git-hooks",
@@ -38,9 +38,10 @@
 		"electron-builder": "22.14.13",
 		"electron-devtools-installer": "3.2.0",
 		"eslint": "8.10.0",
-		"eslint-plugin-vue": "8.5.0",
+		"eslint-define-config": "^1.2.5",
 		"execa": "^6.1.0",
 		"happy-dom": "2.46.0",
+		"lint-staged": "^12.3.5",
 		"lion-git-hooks": "^1.0.7",
 		"lion-system": "^1.0.11",
 		"nano-staged": "0.6.0",
@@ -61,6 +62,12 @@
 	"commitlint": {
 		"extends": [
 			"@leonzalion/configs/commitlint.cjs"
+		]
+	},
+	"lint-staged": {
+		".{js,ts,vue}": [
+			"pnpm run lint",
+			"pnpm run prettier"
 		]
 	}
 }

@@ -12,7 +12,7 @@
 		"src/**/*.ts",
 		"typings/contracts.d.ts",
 		"../../typings/**/*.d.ts"
-, "src/index.cts"	],
+, "src/index.mts"	],
 	"exclude": [
 		"**/*.spec.ts",
 		"**/*.test.ts"

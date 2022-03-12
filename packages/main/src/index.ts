@@ -1,13 +1,11 @@
 /* eslint-disable unicorn/no-process-exit */
 
 import * as process from 'node:process';
+import { app } from 'electron';
 import { restoreOrCreateWindow } from './main-window.js';
-import { electron } from './electron.cjs';
 import { initializeSecurityRestrictions } from './security-restrictions.js';
 
-export async function main() {
-	const { app } = electron;
-
+async function main() {
 	/**
 	 * Prevent multiple instances
 	 */
@@ -50,18 +48,11 @@ export async function main() {
 		app
 			.whenReady()
 			.then(async () => import('electron-devtools-installer'))
-			.then(async (electronDevtoolsInstaller) => {
-				const { VUEJS3_DEVTOOLS, default: devtoolsInstallerPackage } =
-					electronDevtoolsInstaller;
-				const { default: install } = devtoolsInstallerPackage as unknown as {
-					default: typeof devtoolsInstallerPackage;
-				};
-				return install(VUEJS3_DEVTOOLS, {
+			.then(async ({ VUEJS3_DEVTOOLS, default: install }) => install(VUEJS3_DEVTOOLS, {
 					loadExtensionOptions: {
 						allowFileAccess: true,
 					},
-				});
-			})
+				}))
 			.catch((error) => {
 				console.error('Failed install extension:', error);
 			});
@@ -82,3 +73,5 @@ export async function main() {
 
 	await initializeSecurityRestrictions();
 }
+
+void main();

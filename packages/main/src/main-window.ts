@@ -1,9 +1,8 @@
 import { URL } from 'node:url';
+import { BrowserWindow } from 'electron';
 import { join } from 'desm';
-import { electron } from './electron.cjs';
 
 async function createWindow() {
-	const { BrowserWindow } = electron;
 	const browserWindow = new BrowserWindow({
 		show: false, // Use 'ready-to-show' event to show window
 		webPreferences: {
@@ -20,7 +19,11 @@ async function createWindow() {
 	 * @see https://github.com/electron/electron/issues/25012
 	 */
 	browserWindow.on('ready-to-show', () => {
-		browserWindow?.show();
+		if (import.meta.env.DEV) {
+			browserWindow.showInactive();
+		} else {
+			browserWindow.show();
+		}
 
 		if (import.meta.env.DEV) {
 			browserWindow?.webContents.openDevTools();
@@ -46,7 +49,6 @@ async function createWindow() {
  * Restore existing BrowserWindow or Create new BrowserWindow
  */
 export async function restoreOrCreateWindow() {
-	const { BrowserWindow } = electron;
 	let window = BrowserWindow.getAllWindows().find((w) => !w.isDestroyed());
 
 	if (window === undefined) {

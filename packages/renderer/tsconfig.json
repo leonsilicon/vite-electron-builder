@@ -4,11 +4,18 @@
 		"types": [
 			"node"
 		],
+		"module": "ESNext",
 		"baseUrl": ".",
 		"paths": {
 			"~r/*": [
 				"./src/*"
-			]
+			],
+			"~m": [
+				"../main/src/*"
+			],
+			"~p": [
+				"../preload/src/*"
+			],
 		},
 		"lib": [
 			"ESNext",

@@ -1,9 +1,7 @@
 import { URL } from 'node:url';
-import { electron } from './electron.cjs';
+import { app, shell } from 'electron';
 
 export async function initializeSecurityRestrictions() {
-	const { app, shell } = electron;
-
 	/**
 	 * List of origins that you allow open INSIDE the application and permissions for each of them.
 	 *

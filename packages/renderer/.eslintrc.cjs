@@ -1,8 +1,10 @@
 const path = require('path');
+const defineConfig = orequire('eslint-define-config');
 
-module.exports = {
+module.exports = defineConfig({
 	extends: '../../.eslintrc.cjs',
 	parserOptions: {
 		project: [path.resolve(__dirname, 'tsconfig.eslint.json')],
+		extraFileExtensions: ['.vue'],
 	},
-};
+});

@@ -27,7 +27,7 @@ const config: UserConfig = {
 			'~r': join(import.meta.url, '../renderer/src'),
 			'~m': join(import.meta.url, '../main/src'),
 			'~p': join(import.meta.url, './src'),
-		}
+		},
 	},
 	build: {
 		sourcemap: 'inline',
@@ -36,11 +36,12 @@ const config: UserConfig = {
 		assetsDir: '.',
 		minify: process.env.MODE !== 'development',
 		lib: {
-			entry: 'src/index.cts',
-			formats: ['es'],
+			entry: 'src/index.ts',
+			formats: ['cjs'],
 		},
 		rollupOptions: {
 			external: [
+				/electron\.cjs/,
 				'electron',
 				...builtinModules.flatMap((p) => [p, `node:${p}`]),
 			],

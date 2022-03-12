@@ -4,7 +4,7 @@ import { builtinModules } from 'node:module';
 import * as path from 'node:path';
 import vue from '@vitejs/plugin-vue';
 import { dirname, join } from 'desm';
-import type { UserConfig } from 'vite';
+import type { UserConfig } from 'vitest/config';
 
 const { chrome } = JSON.parse(
 	fs.readFileSync(
