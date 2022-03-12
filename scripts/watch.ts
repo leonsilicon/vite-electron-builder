@@ -14,7 +14,7 @@ import type {
 } from 'vite';
 import type { OutputPlugin } from 'rollup';
 
-process.env.MODe = process.env.MODE ?? 'development';
+process.env.MODE = process.env.MODE ?? 'development';
 const mode = process.env.MODE as 'production' | 'development';
 
 const LOG_LEVEL: LogLevel = 'info';
@@ -77,7 +77,7 @@ const setupMainPackageWatcher = async ({
 
 	return getWatcher({
 		name: 'reload-app-on-main-package-change',
-		configFile: 'packages/main/vite.config.js',
+		configFile: 'packages/main/vite.config.ts',
 		writeBundle() {
 			if (spawnProcess !== undefined) {
 				void spawnProcess.off('exit', process.exit);
@@ -113,7 +113,7 @@ const setupMainPackageWatcher = async ({
 const setupPreloadPackageWatcher = async ({ ws }: { ws: WebSocketServer }) =>
 	getWatcher({
 		name: 'reload-page-on-preload-package-change',
-		configFile: 'packages/preload/vite.config.js',
+		configFile: 'packages/preload/vite.config.ts',
 		writeBundle() {
 			ws.send({
 				type: 'full-reload',
@@ -124,7 +124,7 @@ const setupPreloadPackageWatcher = async ({ ws }: { ws: WebSocketServer }) =>
 try {
 	const viteDevServer = await createServer({
 		...sharedConfig,
-		configFile: 'packages/renderer/vite.config.js',
+		configFile: 'packages/renderer/vite.config.ts',
 	});
 
 	await viteDevServer.listen();

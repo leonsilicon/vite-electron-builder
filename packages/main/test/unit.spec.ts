@@ -1,7 +1,9 @@
-import { BrowserWindow } from 'electron';
+import * as electron from 'electron';
 import type { MaybeMocked } from 'vitest';
 import { beforeEach, expect, test, vi } from 'vitest';
 import { restoreOrCreateWindow } from '../src/main-window.js';
+
+const { BrowserWindow } = electron;
 
 /**
  * Mock real electron BrowserWindow API
@@ -18,7 +20,7 @@ vi.mock('electron', () => {
 	bw.prototype.focus = vi.fn();
 	bw.prototype.restore = vi.fn();
 
-	// eslint-disable-next-line @typescript-eslint/naming-convention
+
 	return { BrowserWindow: bw };
 });
 

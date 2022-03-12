@@ -1,9 +1,15 @@
 /* eslint-disable unicorn/no-process-exit */
 
-import { app } from 'electron';
-import './security-restrictions.js';
 import * as process from 'node:process';
 import { restoreOrCreateWindow } from './main-window.js';
+import { electron } from './electron.cjs';
+
+const { app } = electron;
+
+/**
+ * Disable Hardware Acceleration for more power-save
+ */
+app.disableHardwareAcceleration();
 
 /**
  * Prevent multiple instances
@@ -15,11 +21,6 @@ if (!isSingleInstance) {
 }
 
 app.on('second-instance', restoreOrCreateWindow);
-
-/**
- * Disable Hardware Acceleration for more power-save
- */
-app.disableHardwareAcceleration();
 
 /**
  * Shout down background process if all windows was closed
@@ -52,7 +53,6 @@ if (import.meta.env.DEV) {
 	app
 		.whenReady()
 		.then(async () => import('electron-devtools-installer'))
-		// eslint-disable-next-line @typescript-eslint/naming-convention
 		.then(async ({ default: installExtension, VUEJS3_DEVTOOLS }) =>
 			installExtension(VUEJS3_DEVTOOLS, {
 				loadExtensionOptions: {
@@ -77,3 +77,5 @@ if (import.meta.env.PROD) {
 			console.error('Failed check updates:', error);
 		});
 }
+
+await import('./security-restrictions.js');

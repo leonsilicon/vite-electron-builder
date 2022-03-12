@@ -3,11 +3,14 @@ import * as process from 'node:process';
 import { builtinModules } from 'node:module';
 import * as path from 'node:path';
 import vue from '@vitejs/plugin-vue';
-import { dirname } from 'desm';
+import { dirname, join } from 'desm';
 import type { UserConfig } from 'vite';
 
 const { chrome } = JSON.parse(
-	fs.readFileSync('../../.electron-vendors.cache.json', 'utf-8')
+	fs.readFileSync(
+		join(import.meta.url, '../../.electron-vendors.cache.json'),
+		'utf-8'
+	)
 ) as {
 	chrome: string;
 };
@@ -22,7 +25,9 @@ const config: UserConfig = {
 	root: PACKAGE_ROOT,
 	resolve: {
 		alias: {
-			'~': path.join(PACKAGE_ROOT, 'src') + '/',
+			'~r': join(import.meta.url, './src'),
+			'~m': join(import.meta.url, '../main/src'),
+			'~p': join(import.meta.url, '../preload/src'),
 		},
 	},
 	plugins: [vue()],

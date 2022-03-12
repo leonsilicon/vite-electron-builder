@@ -1,5 +1,8 @@
-import { app, shell } from 'electron';
 import { URL } from 'node:url';
+import { electron } from './electron.cjs';
+
+console.log(electron);
+const { app, shell } = electron;
 
 /**
  * List of origins that you allow open INSIDE the application and permissions for each of them.

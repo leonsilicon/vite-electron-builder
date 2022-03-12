@@ -1,15 +1,38 @@
 import * as fs from 'node:fs';
 import * as process from 'node:process';
-import { join } from 'node:path';
 import { builtinModules } from 'node:module';
-import { dirname } from 'desm';
+import { join, dirname } from 'desm';
 import type { UserConfig } from 'vite';
+import type { Plugin } from 'rollup';
+import ts from 'typescript';
 
 const { node } = JSON.parse(
-	fs.readFileSync('../../electron-vendors.cache.json', 'utf-8')
+	fs.readFileSync(
+		join(import.meta.url, '../../.electron-vendors.cache.json'),
+		'utf-8'
+	)
 ) as { node: string };
 
 const PACKAGE_ROOT = dirname(import.meta.url);
+
+function copyElectronCjs(): Plugin {
+	return {
+		name: 'copy-electron-cjs',
+		buildStart() {
+			const source = fs.readFileSync(
+				join(import.meta.url, 'src/electron.cts'),
+				'utf-8'
+			);
+
+			const result = ts.transpileModule(source, {});
+
+			fs.writeFileSync(
+				join(import.meta.url, './dist/electron.cjs'),
+				result.outputText
+			);
+		},
+	};
+}
 
 /**
  * @see https://vitejs.dev/config/
@@ -20,7 +43,9 @@ const config: UserConfig = {
 	envDir: process.cwd(),
 	resolve: {
 		alias: {
-			'~': join(PACKAGE_ROOT, 'src') + '/',
+			'~r': join(import.meta.url, '../renderer/src'),
+			'~p': join(import.meta.url, '../preload/src'),
+			'~m': join(import.meta.url, './src'),
 		},
 	},
 	build: {
@@ -30,11 +55,12 @@ const config: UserConfig = {
 		assetsDir: '.',
 		minify: process.env.MODE !== 'development',
 		lib: {
-			entry: 'src/index.ts',
-			formats: ['cjs'],
+			entry: 'src/index.cts',
+			formats: ['es'],
 		},
 		rollupOptions: {
 			external: [
+				/electron\.cjs/,
 				'electron',
 				'electron-devtools-installer',
 				...builtinModules.flatMap((p) => [p, `node:${p}`]),
@@ -46,6 +72,7 @@ const config: UserConfig = {
 		emptyOutDir: true,
 		brotliSize: false,
 	},
+	plugins: [copyElectronCjs()],
 };
 
 export default config;

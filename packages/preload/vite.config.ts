@@ -1,11 +1,14 @@
 import * as fs from 'node:fs';
 import * as process from 'node:process';
 import { builtinModules } from 'node:module';
-import { dirname } from 'desm';
+import { dirname, join } from 'desm';
 import type { UserConfig } from 'vite';
 
 const { chrome } = JSON.parse(
-	fs.readFileSync('../../.electron-vendors.cache.json', 'utf-8')
+	fs.readFileSync(
+		join(import.meta.url, '../../.electron-vendors.cache.json'),
+		'utf-8'
+	)
 ) as {
 	chrome: string;
 };
@@ -19,6 +22,13 @@ const config: UserConfig = {
 	mode: process.env.MODE,
 	root: PACKAGE_ROOT,
 	envDir: process.cwd(),
+	resolve: {
+		alias: {
+			'~r': join(import.meta.url, '../renderer/src'),
+			'~m': join(import.meta.url, '../main/src'),
+			'~p': join(import.meta.url, './src'),
+		}
+	},
 	build: {
 		sourcemap: 'inline',
 		target: `chrome${chrome}`,
@@ -27,7 +37,7 @@ const config: UserConfig = {
 		minify: process.env.MODE !== 'development',
 		lib: {
 			entry: 'src/index.ts',
-			formats: ['cjs'],
+			formats: ['es'],
 		},
 		rollupOptions: {
 			external: [
@@ -35,7 +45,7 @@ const config: UserConfig = {
 				...builtinModules.flatMap((p) => [p, `node:${p}`]),
 			],
 			output: {
-				entryFileNames: '[name].cjs',
+				entryFileNames: '[name].js',
 			},
 		},
 		emptyOutDir: true,

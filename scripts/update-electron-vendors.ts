@@ -13,7 +13,7 @@ function getVendors(): NodeJS.ProcessVersions {
 	const { stdout: output } = execaSync(
 		`${String(electronPath)} -p "JSON.stringify(process.versions)"`,
 		{
-			 
+
 			env: { ELECTRON_RUN_AS_NODE: '1' },
 			encoding: 'utf-8',
 		}
