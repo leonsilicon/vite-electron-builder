@@ -44,7 +44,6 @@
 		"lint-staged": "^12.3.5",
 		"lion-git-hooks": "^1.0.7",
 		"lion-system": "^1.0.11",
-		"nano-staged": "0.6.0",
 		"playwright": "1.19.2",
 		"prettier": "^2.5.1",
 		"rollup": "^2.70.0",
