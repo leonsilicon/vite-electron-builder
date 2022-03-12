@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import ReactiveCounter from '/@/components/ReactiveCounter.vue';
-import ReactiveHash from '/@/components/ReactiveHash.vue';
-import ElectronVersions from '/@/components/ElectronVersions.vue';
+import ReactiveCounter from '~r/components/ReactiveCounter.vue';
+import ReactiveHash from '~r/components/ReactiveHash.vue';
+import ElectronVersions from '~r/components/ElectronVersions.vue';
 </script>
 
 <template>

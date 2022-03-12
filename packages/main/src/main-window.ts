@@ -2,9 +2,8 @@ import { URL } from 'node:url';
 import { join } from 'desm';
 import { electron } from './electron.cjs';
 
-const { BrowserWindow } = electron;
-
 async function createWindow() {
+	const { BrowserWindow } = electron;
 	const browserWindow = new BrowserWindow({
 		show: false, // Use 'ready-to-show' event to show window
 		webPreferences: {
@@ -47,6 +46,7 @@ async function createWindow() {
  * Restore existing BrowserWindow or Create new BrowserWindow
  */
 export async function restoreOrCreateWindow() {
+	const { BrowserWindow } = electron;
 	let window = BrowserWindow.getAllWindows().find((w) => !w.isDestroyed());
 
 	if (window === undefined) {

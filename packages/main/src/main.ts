@@ -3,79 +3,78 @@
 import * as process from 'node:process';
 import { restoreOrCreateWindow } from './main-window.js';
 import { electron } from './electron.cjs';
+import { initializeSecurityRestrictions } from './security-restrictions.js';
 
-const { app } = electron;
+export async function main() {
+	const { app } = electron;
 
-/**
- * Disable Hardware Acceleration for more power-save
- */
-app.disableHardwareAcceleration();
 
-/**
- * Prevent multiple instances
- */
-const isSingleInstance = app.requestSingleInstanceLock();
-if (!isSingleInstance) {
-	app.quit();
-	process.exit(0);
-}
-
-app.on('second-instance', restoreOrCreateWindow);
-
-/**
- * Shout down background process if all windows was closed
- */
-app.on('window-all-closed', () => {
-	if (process.platform !== 'darwin') {
+	/**
+	 * Prevent multiple instances
+	 */
+	const isSingleInstance = app.requestSingleInstanceLock();
+	if (!isSingleInstance) {
 		app.quit();
+		process.exit(0);
 	}
-});
 
-/**
- * @see https://www.electronjs.org/docs/v14-x-y/api/app#event-activate-macos Event: 'activate'
- */
-app.on('activate', restoreOrCreateWindow);
+	app.on('second-instance', restoreOrCreateWindow);
 
-/**
- * Create app window when background process will be ready
- */
-app
-	.whenReady()
-	.then(restoreOrCreateWindow)
-	.catch((error) => {
-		console.error('Failed create window:', error);
+	/**
+	 * Shout down background process if all windows was closed
+	 */
+	app.on('window-all-closed', () => {
+		if (process.platform !== 'darwin') {
+			app.quit();
+		}
 	});
 
-/**
- * Install Vue.js or some other devtools in development mode only
- */
-if (import.meta.env.DEV) {
+	/**
+	 * @see https://www.electronjs.org/docs/v14-x-y/api/app#event-activate-macos Event: 'activate'
+	 */
+	app.on('activate', restoreOrCreateWindow);
+
+	/**
+	 * Create app window when background process will be ready
+	 */
 	app
 		.whenReady()
-		.then(async () => import('electron-devtools-installer'))
-		.then(async ({ default: installExtension, VUEJS3_DEVTOOLS }) =>
-			installExtension(VUEJS3_DEVTOOLS, {
-				loadExtensionOptions: {
-					allowFileAccess: true,
-				},
-			})
-		)
+		.then(restoreOrCreateWindow)
 		.catch((error) => {
-			console.error('Failed install extension:', error);
+			console.error('Failed create window:', error);
 		});
-}
 
-/**
- * Check new app version in production mode only
- */
-if (import.meta.env.PROD) {
-	app
-		.whenReady()
-		.then(async () => import('electron-updater'))
-		.then(async ({ autoUpdater }) => autoUpdater.checkForUpdatesAndNotify())
-		.catch((error) => {
-			console.error('Failed check updates:', error);
-		});
-}
+	/**
+	 * Install Vue.js or some other devtools in development mode only
+	 */
+	if (import.meta.env.DEV) {
+		app
+			.whenReady()
+			.then(async () => import('electron-devtools-installer'))
+			.then(async ({ default: installExtension, VUEJS3_DEVTOOLS }) =>
+				installExtension(VUEJS3_DEVTOOLS, {
+					loadExtensionOptions: {
+						allowFileAccess: true,
+					},
+				})
+			)
+			.catch((error) => {
+				console.error('Failed install extension:', error);
+			});
+	}
 
-await import('./security-restrictions.js');
+	/**
+	 * Check new app version in production mode only
+	 */
+	if (import.meta.env.PROD) {
+		app
+			.whenReady()
+			.then(async () => import('electron-updater'))
+			.then(async ({ autoUpdater }) => autoUpdater.checkForUpdatesAndNotify())
+			.catch((error) => {
+				console.error('Failed check updates:', error);
+			});
+	}
+
+	await initializeSecurityRestrictions();
+}
