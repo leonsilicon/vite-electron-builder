@@ -24,6 +24,7 @@ function copyElectronCjs(): Plugin {
 				'utf-8'
 			);
 
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 			const result = ts.transpileModule(source, {});
 
 			fs.writeFileSync(

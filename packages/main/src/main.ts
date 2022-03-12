@@ -8,7 +8,6 @@ import { initializeSecurityRestrictions } from './security-restrictions.js';
 export async function main() {
 	const { app } = electron;
 
-
 	/**
 	 * Prevent multiple instances
 	 */
@@ -51,13 +50,18 @@ export async function main() {
 		app
 			.whenReady()
 			.then(async () => import('electron-devtools-installer'))
-			.then(async ({ default: installExtension, VUEJS3_DEVTOOLS }) =>
-				installExtension(VUEJS3_DEVTOOLS, {
+			.then(async (electronDevtoolsInstaller) => {
+				const { VUEJS3_DEVTOOLS, default: devtoolsInstallerPackage } =
+					electronDevtoolsInstaller;
+				const { default: install } = devtoolsInstallerPackage as unknown as {
+					default: typeof devtoolsInstallerPackage;
+				};
+				return install(VUEJS3_DEVTOOLS, {
 					loadExtensionOptions: {
 						allowFileAccess: true,
 					},
-				})
-			)
+				});
+			})
 			.catch((error) => {
 				console.error('Failed install extension:', error);
 			});

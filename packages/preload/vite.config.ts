@@ -36,7 +36,7 @@ const config: UserConfig = {
 		assetsDir: '.',
 		minify: process.env.MODE !== 'development',
 		lib: {
-			entry: 'src/index.ts',
+			entry: 'src/index.cts',
 			formats: ['es'],
 		},
 		rollupOptions: {
@@ -45,7 +45,7 @@ const config: UserConfig = {
 				...builtinModules.flatMap((p) => [p, `node:${p}`]),
 			],
 			output: {
-				entryFileNames: '[name].js',
+				entryFileNames: '[name].cjs',
 			},
 		},
 		emptyOutDir: true,
