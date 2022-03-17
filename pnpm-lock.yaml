@@ -8,7 +8,7 @@ specifiers:
   '@vue/test-utils': 2.0.0-rc.17
   cross-env: 7.0.3
   desm: ^1.2.0
-  electron: 17.1.1
+  electron: ^16
   electron-builder: 22.14.13
   electron-devtools-installer: 3.2.0
   electron-updater: 4.6.5
@@ -40,7 +40,7 @@ devDependencies:
   '@vitejs/plugin-vue': 2.2.4_vite@2.8.6+vue@3.2.31
   '@vue/test-utils': 2.0.0-rc.17_vue@3.2.31
   cross-env: 7.0.3
-  electron: 17.1.1
+  electron: 16.1.0
   electron-builder: 22.14.13
   electron-devtools-installer: 3.2.0
   eslint: 8.11.0
@@ -2280,8 +2280,8 @@ packages:
       - supports-color
     dev: false
 
-  /electron/17.1.1:
-    resolution: {integrity: sha512-S+PIsCOfxB+9DkPsbnWpbLQx6+3P5FGedCeVQ/vhZEX8zD4Wj2F118HGFX6ShEfsaTYE623ESK/f+b2ueHpEpQ==}
+  /electron/16.1.0:
+    resolution: {integrity: sha512-G4fpHmE3sgd497e0zEier/AmZ4fyReX8ozYAl468+FaI5kb44+69igRHQwRUtmPzv+fCn/Jm4wJQPfLe60WmUQ==}
     engines: {node: '>= 8.6'}
     hasBin: true
     requiresBuild: true

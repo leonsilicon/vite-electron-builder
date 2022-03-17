@@ -48,11 +48,13 @@ async function main() {
 		app
 			.whenReady()
 			.then(async () => import('electron-devtools-installer'))
-			.then(async ({ VUEJS3_DEVTOOLS, default: install }) => install(VUEJS3_DEVTOOLS, {
+			.then(async ({ VUEJS3_DEVTOOLS, default: install }) =>
+				install(VUEJS3_DEVTOOLS, {
 					loadExtensionOptions: {
 						allowFileAccess: true,
 					},
-				}))
+				})
+			)
 			.catch((error) => {
 				console.error('Failed install extension:', error);
 			});
